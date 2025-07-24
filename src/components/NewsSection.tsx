@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { useNavigate } from 'react-router-dom';
 
 const NewsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [expandedArticle, setExpandedArticle] = useState(null); // For modal
   const [articlesToShow, setArticlesToShow] = useState(6); // Show 6 by default
   const [allLoaded, setAllLoaded] = useState(false);
+  const navigate = useNavigate();
 
   const categories = ['all', 'team-news', 'match-reports', 'transfers', 'interviews'];
 
@@ -179,7 +181,7 @@ const NewsSection = () => {
                       </div>
                       <span>{visibleNews[0].readTime}</span>
                     </div>
-                    <Button className="bg-rcb-red hover:bg-rcb-red/90 text-white" onClick={() => setExpandedArticle(visibleNews[0])}>
+                    <Button className="bg-rcb-red hover:bg-rcb-red/90 text-white" onClick={() => navigate(`/news/${visibleNews[0].id}`)}>
                       Read More
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -242,7 +244,7 @@ const NewsSection = () => {
                   variant="outline"
                   size="sm"
                   className="w-full border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black"
-                  onClick={() => setExpandedArticle(article)}
+                  onClick={() => navigate(`/news/${article.id}`)}
                 >
                   Read Full Article
                   <ArrowRight className="ml-2 h-3 w-3" />
@@ -301,22 +303,7 @@ const NewsSection = () => {
           </div>
         </div>
         {/* Article Modal */}
-        {expandedArticle && (
-          <Dialog open={!!expandedArticle} onOpenChange={() => setExpandedArticle(null)}>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{expandedArticle.title}</DialogTitle>
-                <DialogDescription>
-                  <div className="mb-2 text-muted-foreground">
-                    <span>By {expandedArticle.author} | {formatDate(expandedArticle.date)} | {expandedArticle.readTime}</span>
-                  </div>
-                  <div className="mb-4">{expandedArticle.excerpt}</div>
-                  <div className="text-sm text-muted-foreground">(Full article content goes here...)</div>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
-        )}
+        {/* (Removed, now handled by navigation) */}
       </div>
     </section>
   );

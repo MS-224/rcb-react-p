@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Home, Users, Calendar, ImageIcon, Newspaper, ShoppingBag } from 'lucide-react';
+import { Menu, X, Home, Users, Calendar, ImageIcon, Newspaper, ShoppingBag, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const Navigation = () => {
+const Navigation = ({ onCartClick, cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
@@ -49,6 +49,18 @@ const Navigation = () => {
                   Sign Up
                 </Button>
               </Link>
+              {cartCount > 0 && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative text-white hover:text-rcb-gold hover:bg-rcb-red/20 ml-2"
+                  onClick={onCartClick}
+                  aria-label="Open cart"
+                >
+                  <ShoppingCart className="h-6 w-6" />
+                  <span className="absolute -top-2 -right-2 bg-black text-white rounded-full text-xs w-5 h-5 flex items-center justify-center border-2 border-white">{cartCount}</span>
+                </Button>
+              )}
             </div>
           </div>
 
