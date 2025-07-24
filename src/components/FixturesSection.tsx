@@ -3,9 +3,17 @@ import { Calendar, MapPin, Clock, Ticket, Trophy, ArrowRight } from 'lucide-reac
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
 
 const FixturesSection = () => {
   const [selectedTab, setSelectedTab] = useState('upcoming');
+  const [bookingFixture, setBookingFixture] = useState(null);
+  const [seatType, setSeatType] = useState('General');
+  const [numPersons, setNumPersons] = useState(1);
+  const { toast } = useToast();
 
   // Mock fixture data
   const fixtures = {
@@ -197,6 +205,11 @@ const FixturesSection = () => {
                           ? 'bg-rcb-red hover:bg-rcb-red/90 text-white'
                           : 'bg-muted text-muted-foreground cursor-not-allowed'}`}
                         disabled={!fixture.ticketsAvailable}
+                        onClick={() => {
+                          setBookingFixture(fixture);
+                          setSeatType('General');
+                          setNumPersons(1);
+                        }}
                       >
                         {fixture.ticketsAvailable ? (
                           <>
@@ -414,6 +427,60 @@ const FixturesSection = () => {
           </>
         )}
       </div>
+      {/* Booking Modal */}
+      <Dialog open={!!bookingFixture} onOpenChange={open => { if (!open) setBookingFixture(null); }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Book Tickets</DialogTitle>
+          </DialogHeader>
+          {bookingFixture && (
+            <div className="space-y-4">
+              <div className="text-lg font-bold text-center mb-2">RCB vs {bookingFixture.opponent}</div>
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <span>{bookingFixture.venue}</span>
+                <span>{formatDate(bookingFixture.date)} | {bookingFixture.time} IST</span>
+              </div>
+              <div className="flex flex-col md:flex-row gap-4 mt-4">
+                <div className="flex-1">
+                  <label className="block mb-1 font-medium">Seat Type</label>
+                  <select
+                    className="w-full border rounded-lg p-2"
+                    value={seatType}
+                    onChange={e => setSeatType(e.target.value)}
+                  >
+                    <option value="General">General</option>
+                    <option value="Premium">Premium</option>
+                    <option value="VIP">VIP</option>
+                  </select>
+                </div>
+                <div className="flex-1">
+                  <label className="block mb-1 font-medium">Number of Persons</label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={numPersons}
+                    onChange={e => setNumPersons(Number(e.target.value))}
+                    className="w-full border rounded-lg p-2"
+                  />
+                </div>
+              </div>
+              <Button
+                className="w-full bg-rcb-red hover:bg-rcb-red/90 text-white text-lg py-3 rounded-xl font-bold mt-4"
+                onClick={() => {
+                  setBookingFixture(null);
+                  toast({
+                    title: 'Booking Confirmed!',
+                    description: `You have booked ${numPersons} ${seatType} ticket(s) for RCB vs ${bookingFixture.opponent}. Enjoy the match!`,
+                  });
+                }}
+              >
+                Confirm Booking
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

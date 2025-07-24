@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShoppingCart, Heart, Star, Filter, Search, Truck, Shield, RotateCcw, Trash } from 'lucide-react';
+import { ShoppingCart, Heart, Star, Filter, Search, Truck, Shield, RotateCcw, Trash, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';

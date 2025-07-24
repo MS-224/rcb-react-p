@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, Mail, Lock, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,7 @@ const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,96 +19,118 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rcb-black via-rcb-red/10 to-rcb-gold/10 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-rcb-red to-rcb-gold rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-2xl">RCB</span>
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Left: Logo and gradient */}
+      <div className="md:w-1/2 flex items-center justify-center bg-gradient-to-br from-rcb-red to-black p-8">
+        <div className="flex flex-col items-center">
+          <img src="/rcb-hero.jpg" alt="RCB Logo" className="w-72 h-72 object-contain mb-6" />
+          <div className="text-center">
+            <span className="block text-6xl font-extrabold text-rcb-gold tracking-tight mb-2">RCB</span>
+            <span className="block text-xl font-semibold text-rcb-gold tracking-wide">ROYAL CHALLENGERS BENGALURU</span>
           </div>
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-rcb-red to-rcb-gold bg-clip-text text-transparent">
-            Welcome Back
-          </CardTitle>
-          <CardDescription>
-            Sign in to your RCB account to access exclusive content
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10"
-                  required
-                />
+        </div>
+      </div>
+      {/* Right: Form */}
+      <div className="md:w-1/2 flex items-center justify-center bg-gradient-to-br from-rcb-black via-rcb-red/10 to-rcb-gold/10 p-4 min-h-screen">
+        <Card className="w-full max-w-xl p-8 relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4 z-10 text-rcb-red hover:text-rcb-gold"
+            onClick={() => navigate('/')}
+            aria-label="Close"
+          >
+            <X className="h-6 w-6" />
+          </Button>
+          <CardHeader className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-r from-rcb-red to-rcb-gold rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-white font-bold text-2xl">RCB</span>
+            </div>
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-rcb-red to-rcb-gold bg-clip-text text-transparent">
+              Welcome Back
+            </CardTitle>
+            <CardDescription>
+              Sign in to your RCB account to access exclusive content
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-12 py-4 text-lg"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 pr-10"
-                  required
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-muted-foreground" />
-                  )}
-                </Button>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-12 pr-12 py-4 text-lg"
+                    required
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </Button>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-center justify-between">
-              <Link
-                to="/forgot-password"
-                className="text-sm text-rcb-red hover:text-rcb-gold transition-colors"
-              >
-                Forgot password?
-              </Link>
-            </div>
-
-            <Button
-              type="submit"
-              className="w-full bg-rcb-red hover:bg-rcb-red/90 text-white"
-            >
-              Sign In
-            </Button>
-
-            <div className="text-center">
-              <span className="text-sm text-muted-foreground">
-                Don't have an account?{' '}
+              <div className="flex items-center justify-between">
                 <Link
-                  to="/signup"
-                  className="text-rcb-red hover:text-rcb-gold transition-colors font-medium"
+                  to="/forgot-password"
+                  className="text-sm text-rcb-red hover:text-rcb-gold transition-colors"
                 >
-                  Sign up
+                  Forgot password?
                 </Link>
-              </span>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-rcb-red hover:bg-rcb-red/90 text-white text-lg py-4 rounded-xl font-bold"
+              >
+                Sign In
+              </Button>
+
+              <div className="text-center">
+                <span className="text-sm text-muted-foreground">
+                  Don't have an account?{' '}
+                  <Link
+                    to="/signup"
+                    className="text-rcb-red hover:text-rcb-gold transition-colors font-medium"
+                  >
+                    Sign up
+                  </Link>
+                </span>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
