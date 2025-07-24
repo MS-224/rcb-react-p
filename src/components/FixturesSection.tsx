@@ -7,6 +7,16 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import miLogo from '@/assets/teamslogo/MI.png';
+import cskLogo from '@/assets/teamslogo/CSK.png';
+import dcLogo from '@/assets/teamslogo/DC.png';
+import kkrLogo from '@/assets/teamslogo/KKR.png';
+import pbksLogo from '@/assets/teamslogo/PBKS.png';
+import rrLogo from '@/assets/teamslogo/RR.png';
+import srhLogo from '@/assets/teamslogo/SRH.png';
+import lsgLogo from '@/assets/teamslogo/LSG.png';
+import gtLogo from '@/assets/teamslogo/GT.png';
+import rcbLogo from '@/assets/teamslogo/rcb mt.png';
 
 const FixturesSection = () => {
   const [selectedTab, setSelectedTab] = useState('upcoming');
@@ -99,16 +109,16 @@ const FixturesSection = () => {
 
   // Add a mapping for team logos
   const teamLogos = {
-    'RCB': '/placeholder.svg',
-    'Mumbai Indians': '/placeholder.svg',
-    'Chennai Super Kings': '/placeholder.svg',
-    'Delhi Capitals': '/placeholder.svg',
-    'Kolkata Knight Riders': '/placeholder.svg',
-    'Punjab Kings': '/placeholder.svg',
-    'Rajasthan Royals': '/placeholder.svg',
-    'Sunrisers Hyderabad': '/placeholder.svg',
-    'Lucknow Super Giants': '/placeholder.svg',
-    'Gujarat Titans': '/placeholder.svg',
+    'RCB': rcbLogo,
+    'Mumbai Indians': miLogo,
+    'Chennai Super Kings': cskLogo,
+    'Delhi Capitals': dcLogo,
+    'Kolkata Knight Riders': kkrLogo,
+    'Punjab Kings': pbksLogo,
+    'Rajasthan Royals': rrLogo,
+    'Sunrisers Hyderabad': srhLogo,
+    'Lucknow Super Giants': lsgLogo,
+    'Gujarat Titans': gtLogo,
   };
 
   return (

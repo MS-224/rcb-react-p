@@ -5,6 +5,13 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerClose } from '@/components/ui/drawer';
+import j1 from '@/assets/shop/j-1.jpg';
+import j2 from '@/assets/shop/j-2.jpg';
+import jac1 from '@/assets/shop/jac-1.jpg';
+import jac2 from '@/assets/shop/jac-2.jpg';
+import s1 from '@/assets/shop/s-1.jpg';
+import t1 from '@/assets/shop/t-1.jpg';
+import t2 from '@/assets/shop/t-2.jpg';
 
 const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantities, showCart, setShowCart }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -36,7 +43,7 @@ const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantitie
       price: 85.99,
       color: 'Sand',
       size: 'L',
-      image: '/placeholder.svg',
+      image: j1,
       rating: 4.8,
       reviews: 245,
       bestseller: true,
@@ -50,7 +57,7 @@ const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantitie
       price: 225.00,
       color: 'Dark Blue',
       size: 'M',
-      image: '/placeholder.svg',
+      image: j2,
       rating: 4.7,
       reviews: 189,
       bestseller: false,
@@ -64,7 +71,7 @@ const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantitie
       price: 250.00,
       color: 'Yellow',
       size: 'L',
-      image: '/placeholder.svg',
+      image: jac1,
       rating: 4.6,
       reviews: 156,
       bestseller: true,
@@ -77,7 +84,7 @@ const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantitie
       category: 'caps',
       price: 899,
       originalPrice: 1199,
-      image: '/placeholder.svg',
+      image: jac2,
       rating: 4.6,
       reviews: 156,
       bestseller: true,
@@ -90,7 +97,7 @@ const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantitie
       category: 'caps',
       price: 699,
       originalPrice: 999,
-      image: '/placeholder.svg',
+      image: s1,
       rating: 4.5,
       reviews: 98,
       bestseller: false,
@@ -103,7 +110,7 @@ const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantitie
       category: 'accessories',
       price: 399,
       originalPrice: 599,
-      image: '/placeholder.svg',
+      image: t1,
       rating: 4.4,
       reviews: 87,
       bestseller: false,
@@ -116,7 +123,7 @@ const ShopSection = ({ cartItems, setCartItems, cartQuantities, setCartQuantitie
       category: 'accessories',
       price: 199,
       originalPrice: 299,
-      image: '/placeholder.svg',
+      image: t2,
       rating: 4.3,
       reviews: 134,
       bestseller: false,

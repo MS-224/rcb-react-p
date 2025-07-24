@@ -3,6 +3,12 @@ import { ImageIcon, Play, Heart, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import p1 from '@/assets/gallery/p1.jpg';
+import p2 from '@/assets/gallery/p2.jpg';
+import p3 from '@/assets/gallery/p3.jpeg';
+import p4 from '@/assets/gallery/p4.png';
+import celeb1 from '@/assets/gallery/celeb-1.jpg';
+import celeb2 from '@/assets/gallery/celeb-2.jpg';
 
 const GalleryPreview = () => {
   // Show only featured/recent gallery items
@@ -11,7 +17,7 @@ const GalleryPreview = () => {
       id: 1,
       type: 'image',
       title: 'Virat Kohli Century Celebration',
-      url: '/placeholder.svg',
+      url: p1,
       likes: 12500,
       date: '2024-03-10'
     },
@@ -19,7 +25,7 @@ const GalleryPreview = () => {
       id: 2,
       type: 'video',
       title: 'Match Winning Six by Maxwell',
-      url: '/placeholder.svg',
+      url: p2,
       likes: 8900,
       date: '2024-03-08',
       duration: '0:45'
@@ -28,7 +34,7 @@ const GalleryPreview = () => {
       id: 3,
       type: 'image',
       title: 'Victory Lap at Chinnaswamy',
-      url: '/placeholder.svg',
+      url: p3,
       likes: 15200,
       date: '2024-03-03'
     },
@@ -36,7 +42,7 @@ const GalleryPreview = () => {
       id: 4,
       type: 'video',
       title: 'Dressing Room Celebrations',
-      url: '/placeholder.svg',
+      url: p4,
       likes: 9800,
       date: '2024-03-01',
       duration: '1:20'
@@ -45,7 +51,7 @@ const GalleryPreview = () => {
       id: 5,
       type: 'image',
       title: 'Faf du Plessis Power Hitting',
-      url: '/placeholder.svg',
+      url: celeb1,
       likes: 7300,
       date: '2024-02-28'
     },
@@ -53,7 +59,7 @@ const GalleryPreview = () => {
       id: 6,
       type: 'image',
       title: 'Mohammed Siraj Bowling Action',
-      url: '/placeholder.svg',
+      url: celeb2,
       likes: 6100,
       date: '2024-02-25'
     }
@@ -81,7 +87,7 @@ const GalleryPreview = () => {
                   ) : (
                     <Play className="h-16 w-16 text-rcb-red/50" />
                   )}
-                  
+
                   {item.type === 'video' && (
                     <Badge className="absolute top-2 left-2 bg-rcb-black/80 text-white">
                       {item.duration}
@@ -89,9 +95,9 @@ const GalleryPreview = () => {
                   )}
 
                   <div className="absolute inset-0 bg-rcb-black/0 group-hover:bg-rcb-black/40 transition-all duration-300 flex items-center justify-center">
-                    <Button 
-                      size="sm" 
-                      variant="secondary" 
+                    <Button
+                      size="sm"
+                      variant="secondary"
                       className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 text-rcb-black hover:bg-white"
                     >
                       {item.type === 'image' ? 'View' : 'Play'}
@@ -104,7 +110,7 @@ const GalleryPreview = () => {
                 <h3 className="font-semibold text-sm mb-2 group-hover:text-rcb-red transition-colors line-clamp-2">
                   {item.title}
                 </h3>
-                
+
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center">
                     <Heart className="h-3 w-3 mr-1 text-rcb-red" />

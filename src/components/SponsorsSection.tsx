@@ -1,6 +1,12 @@
 import { Building2, Handshake } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import s1 from '@/assets/sponsers/s1.jpeg';
+import s2 from '@/assets/sponsers/s2.png';
+import s3 from '@/assets/sponsers/s3.png';
+import s4 from '@/assets/sponsers/s4.png';
+import s5 from '@/assets/sponsers/s5.png';
+import s6 from '@/assets/sponsers/s6.png';
 
 const SponsorsSection = () => {
   const sponsors = [
@@ -8,7 +14,7 @@ const SponsorsSection = () => {
       id: 1,
       name: 'Myntra',
       category: 'Official Partner',
-      logo: 'M',
+      logo: s1,
       description: 'Fashion & Lifestyle Partner',
       tier: 'primary'
     },
@@ -16,7 +22,7 @@ const SponsorsSection = () => {
       id: 2,
       name: 'UB Group',
       category: 'Title Sponsor',
-      logo: 'UB',
+      logo: s2,
       description: 'Strategic Business Partner',
       tier: 'primary'
     },
@@ -24,7 +30,7 @@ const SponsorsSection = () => {
       id: 3,
       name: 'Muthoot FinCorp',
       category: 'Associate Partner',
-      logo: 'MF',
+      logo: s3,
       description: 'Financial Services Partner',
       tier: 'secondary'
     },
@@ -32,7 +38,7 @@ const SponsorsSection = () => {
       id: 4,
       name: 'Zomato',
       category: 'Official Partner',
-      logo: 'Z',
+      logo: s4,
       description: 'Food Delivery Partner',
       tier: 'secondary'
     },
@@ -40,7 +46,7 @@ const SponsorsSection = () => {
       id: 5,
       name: 'Gulf Oil',
       category: 'Associate Partner',
-      logo: 'GO',
+      logo: s5,
       description: 'Lubricants Partner',
       tier: 'secondary'
     },
@@ -48,7 +54,7 @@ const SponsorsSection = () => {
       id: 6,
       name: 'Puma',
       category: 'Kit Partner',
-      logo: 'P',
+      logo: s6,
       description: 'Official Kit & Merchandise',
       tier: 'secondary'
     }
@@ -80,7 +86,7 @@ const SponsorsSection = () => {
               <Card key={sponsor.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-rcb-red/50">
                 <CardContent className="p-8 text-center">
                   <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-rcb-red to-rcb-gold flex items-center justify-center">
-                    <span className="text-2xl font-bold text-white">{sponsor.logo}</span>
+                    <img src={sponsor.logo} alt={sponsor.name} className="w-16 h-16 object-contain" />
                   </div>
                   <h4 className="text-xl font-bold mb-2 group-hover:text-rcb-red transition-colors">
                     {sponsor.name}
@@ -106,7 +112,7 @@ const SponsorsSection = () => {
               <Card key={sponsor.id} className="group hover:shadow-lg transition-all duration-300 hover:scale-105">
                 <CardContent className="p-6 text-center">
                   <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-rcb-gold to-rcb-red flex items-center justify-center">
-                    <span className="text-lg font-bold text-white">{sponsor.logo}</span>
+                    <img src={sponsor.logo} alt={sponsor.name} className="w-12 h-12 object-contain" />
                   </div>
                   <h5 className="font-bold mb-1 group-hover:text-rcb-gold transition-colors">
                     {sponsor.name}

@@ -5,6 +5,10 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useNavigate } from 'react-router-dom';
+import news0 from '@/assets/news/news-0.jpg';
+import news1 from '@/assets/news/news-1.jpg';
+import news3 from '@/assets/news/news-3.jpg';
+import news4 from '@/assets/news/news-4.png';
 
 const NewsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -27,7 +31,8 @@ const NewsSection = () => {
       readTime: '3 min read',
       trending: true,
       comments: 245,
-      shares: 1200
+      shares: 1200,
+      image: news0
     },
     {
       id: 2,
@@ -39,7 +44,8 @@ const NewsSection = () => {
       readTime: '5 min read',
       trending: false,
       comments: 189,
-      shares: 850
+      shares: 850,
+      image: news1
     },
     {
       id: 3,
@@ -51,7 +57,8 @@ const NewsSection = () => {
       readTime: '2 min read',
       trending: true,
       comments: 156,
-      shares: 620
+      shares: 620,
+      image: news3
     },
     {
       id: 4,
@@ -63,7 +70,8 @@ const NewsSection = () => {
       readTime: '4 min read',
       trending: false,
       comments: 98,
-      shares: 420
+      shares: 420,
+      image: news4
     },
     {
       id: 5,
@@ -75,7 +83,8 @@ const NewsSection = () => {
       readTime: '3 min read',
       trending: false,
       comments: 134,
-      shares: 380
+      shares: 380,
+      image: news0
     },
     {
       id: 6,
@@ -87,7 +96,8 @@ const NewsSection = () => {
       readTime: '4 min read',
       trending: true,
       comments: 278,
-      shares: 950
+      shares: 950,
+      image: news1
     }
   ];
 
