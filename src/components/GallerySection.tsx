@@ -3,10 +3,14 @@ import { ImageIcon, Play, Download, Heart, Share } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const GallerySection = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [modalItem, setModalItem] = useState(null); // For modal
+  const [likes, setLikes] = useState({}); // Track likes per item
+  const [itemsToShow, setItemsToShow] = useState(8); // Show 8 by default
+  const [allLoaded, setAllLoaded] = useState(false);
 
   const categories = ['all', 'matches', 'training', 'celebrations', 'behind-scenes'];
 
@@ -89,9 +93,35 @@ const GallerySection = () => {
     }
   ];
 
-  const filteredItems = galleryItems.filter(item => 
+  const filteredItems = galleryItems.filter(item =>
     selectedCategory === 'all' || item.category === selectedCategory
   );
+
+  const visibleItems = filteredItems.slice(0, itemsToShow);
+
+  const handleLike = (id) => {
+    setLikes(prev => ({ ...prev, [id]: (prev[id] || galleryItems.find(i => i.id === id)?.likes || 0) + 1 }));
+  };
+
+  const handleShare = (item) => {
+    if (navigator.share) {
+      navigator.share({
+        title: item.title,
+        url: window.location.href
+      });
+    } else {
+      window.prompt('Copy and share this link:', window.location.href);
+    }
+  };
+
+  const handleDownload = (item) => {
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.download = item.title.replace(/\s+/g, '_');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const formatCategory = (category: string) => {
     if (category === 'behind-scenes') return 'Behind Scenes';
@@ -117,8 +147,8 @@ const GallerySection = () => {
               key={category}
               variant={selectedCategory === category ? 'default' : 'outline'}
               onClick={() => setSelectedCategory(category)}
-              className={selectedCategory === category 
-                ? 'bg-rcb-red text-white hover:bg-rcb-red/90' 
+              className={selectedCategory === category
+                ? 'bg-rcb-red text-white hover:bg-rcb-red/90'
                 : 'border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black'}
             >
               {formatCategory(category)}
@@ -128,55 +158,50 @@ const GallerySection = () => {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredItems.map((item) => (
+          {visibleItems.map((item) => (
             <Card key={item.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-rcb-red/50">
               <div className="relative">
                 {/* Image/Video Thumbnail */}
-                <div className="aspect-square bg-gradient-to-br from-rcb-red/20 to-rcb-gold/20 flex items-center justify-center">
+                <div className="aspect-square bg-gradient-to-br from-rcb-red/20 to-rcb-gold/20 flex items-center justify-center cursor-pointer" onClick={() => setModalItem(item)}>
                   {item.type === 'image' ? (
                     <ImageIcon className="h-16 w-16 text-rcb-red/50" />
                   ) : (
                     <Play className="h-16 w-16 text-rcb-red/50" />
                   )}
-                  
                   {/* Video Duration Badge */}
                   {item.type === 'video' && (
                     <Badge className="absolute top-2 left-2 bg-rcb-black/80 text-white">
                       {item.duration}
                     </Badge>
                   )}
-
                   {/* Category Badge */}
                   <Badge className="absolute top-2 right-2 bg-rcb-gold text-rcb-black">
                     {formatCategory(item.category)}
                   </Badge>
-
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-rcb-black/0 group-hover:bg-rcb-black/40 transition-all duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
-                      <Button size="sm" variant="secondary" className="bg-white/90 text-rcb-black hover:bg-white">
+                      <Button size="sm" variant="secondary" className="bg-white/90 text-rcb-black hover:bg-white" onClick={e => { e.stopPropagation(); handleLike(item.id); }}>
                         <Heart className="h-4 w-4" />
                       </Button>
-                      <Button size="sm" variant="secondary" className="bg-white/90 text-rcb-black hover:bg-white">
+                      <Button size="sm" variant="secondary" className="bg-white/90 text-rcb-black hover:bg-white" onClick={e => { e.stopPropagation(); handleShare(item); }}>
                         <Share className="h-4 w-4" />
                       </Button>
-                      <Button size="sm" variant="secondary" className="bg-white/90 text-rcb-black hover:bg-white">
+                      <Button size="sm" variant="secondary" className="bg-white/90 text-rcb-black hover:bg-white" onClick={e => { e.stopPropagation(); handleDownload(item); }}>
                         <Download className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
                 </div>
               </div>
-
               <CardContent className="p-4">
                 <h3 className="font-semibold text-sm mb-2 group-hover:text-rcb-red transition-colors line-clamp-2">
                   {item.title}
                 </h3>
-                
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center">
                     <Heart className="h-3 w-3 mr-1 text-rcb-red" />
-                    <span>{item.likes.toLocaleString()}</span>
+                    <span>{likes[item.id] !== undefined ? likes[item.id].toLocaleString() : item.likes.toLocaleString()}</span>
                   </div>
                   <span>{new Date(item.date).toLocaleDateString()}</span>
                 </div>
@@ -184,16 +209,46 @@ const GallerySection = () => {
             </Card>
           ))}
         </div>
-
+        {/* Modal for image/video */}
+        {modalItem && (
+          <Dialog open={!!modalItem} onOpenChange={() => setModalItem(null)}>
+            <DialogContent className="max-w-lg">
+              <div className="text-center mb-4 font-bold text-lg">{modalItem.title}</div>
+              {modalItem.type === 'image' ? (
+                <img src={modalItem.url} alt={modalItem.title} className="w-full h-auto rounded" />
+              ) : (
+                <video src={modalItem.url} controls autoPlay className="w-full h-auto rounded" />
+              )}
+            </DialogContent>
+          </Dialog>
+        )}
         {/* Load More Button */}
         <div className="text-center mt-12">
-          <Button 
-            size="lg" 
-            variant="outline"
-            className="border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black px-8 py-6 text-lg font-semibold"
-          >
-            Load More Content
-          </Button>
+          {!allLoaded ? (
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black px-8 py-6 text-lg font-semibold"
+              onClick={() => {
+                if (itemsToShow >= filteredItems.length) {
+                  setAllLoaded(true);
+                } else {
+                  setItemsToShow(prev => {
+                    const next = prev + 4;
+                    if (next >= filteredItems.length) {
+                      setAllLoaded(true);
+                      return filteredItems.length;
+                    }
+                    return next;
+                  });
+                }
+              }}
+            >
+              Load More Content
+            </Button>
+          ) : (
+            <div className="text-rcb-gold font-semibold text-lg mt-4">All content loaded.</div>
+          )}
         </div>
 
         {/* Stats */}

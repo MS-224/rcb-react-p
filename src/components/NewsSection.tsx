@@ -3,9 +3,13 @@ import { Calendar, User, ArrowRight, TrendingUp, MessageSquare, Share2 } from 'l
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 const NewsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [expandedArticle, setExpandedArticle] = useState(null); // For modal
+  const [articlesToShow, setArticlesToShow] = useState(6); // Show 6 by default
+  const [allLoaded, setAllLoaded] = useState(false);
 
   const categories = ['all', 'team-news', 'match-reports', 'transfers', 'interviews'];
 
@@ -85,22 +89,24 @@ const NewsSection = () => {
     }
   ];
 
-  const filteredNews = newsArticles.filter(article => 
+  const filteredNews = newsArticles.filter(article =>
     selectedCategory === 'all' || article.category === selectedCategory
   );
 
+  const visibleNews = filteredNews.slice(0, articlesToShow);
+
   const formatCategory = (category: string) => {
-    return category.split('-').map(word => 
+    return category.split('-').map(word =>
       word.charAt(0).toUpperCase() + word.slice(1)
     ).join(' ');
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-IN', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-IN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
@@ -123,8 +129,8 @@ const NewsSection = () => {
               key={category}
               variant={selectedCategory === category ? 'default' : 'outline'}
               onClick={() => setSelectedCategory(category)}
-              className={selectedCategory === category 
-                ? 'bg-rcb-red text-white hover:bg-rcb-red/90' 
+              className={selectedCategory === category
+                ? 'bg-rcb-red text-white hover:bg-rcb-red/90'
                 : 'border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black'}
             >
               {formatCategory(category)}
@@ -133,7 +139,7 @@ const NewsSection = () => {
         </div>
 
         {/* Featured Article */}
-        {filteredNews.length > 0 && (
+        {visibleNews.length > 0 && (
           <div className="mb-12">
             <Card className="overflow-hidden border-2 border-rcb-red/20 hover:border-rcb-red/50 transition-all duration-300">
               <div className="md:flex">
@@ -146,38 +152,34 @@ const NewsSection = () => {
                 <div className="md:w-2/3 p-8">
                   <div className="flex items-center gap-2 mb-4">
                     <Badge className="bg-rcb-gold text-rcb-black">
-                      {formatCategory(filteredNews[0].category)}
+                      {formatCategory(visibleNews[0].category)}
                     </Badge>
-                    {filteredNews[0].trending && (
+                    {visibleNews[0].trending && (
                       <Badge variant="outline" className="border-rcb-red text-rcb-red">
                         <TrendingUp className="h-3 w-3 mr-1" />
                         Trending
                       </Badge>
                     )}
                   </div>
-                  
                   <h3 className="text-2xl md:text-3xl font-bold mb-4 hover:text-rcb-red transition-colors cursor-pointer">
-                    {filteredNews[0].title}
+                    {visibleNews[0].title}
                   </h3>
-                  
                   <p className="text-muted-foreground mb-6 text-lg">
-                    {filteredNews[0].excerpt}
+                    {visibleNews[0].excerpt}
                   </p>
-                  
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                       <div className="flex items-center">
                         <User className="h-4 w-4 mr-1" />
-                        {filteredNews[0].author}
+                        {visibleNews[0].author}
                       </div>
                       <div className="flex items-center">
                         <Calendar className="h-4 w-4 mr-1" />
-                        {formatDate(filteredNews[0].date)}
+                        {formatDate(visibleNews[0].date)}
                       </div>
-                      <span>{filteredNews[0].readTime}</span>
+                      <span>{visibleNews[0].readTime}</span>
                     </div>
-                    
-                    <Button className="bg-rcb-red hover:bg-rcb-red/90 text-white">
+                    <Button className="bg-rcb-red hover:bg-rcb-red/90 text-white" onClick={() => setExpandedArticle(visibleNews[0])}>
                       Read More
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -190,7 +192,7 @@ const NewsSection = () => {
 
         {/* News Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredNews.slice(1).map((article) => (
+          {visibleNews.slice(1).map((article) => (
             <Card key={article.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-rcb-red/50">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
@@ -204,17 +206,14 @@ const NewsSection = () => {
                     </Badge>
                   )}
                 </div>
-                
                 <h3 className="text-lg font-bold group-hover:text-rcb-red transition-colors cursor-pointer line-clamp-2">
                   {article.title}
                 </h3>
               </CardHeader>
-              
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground text-sm line-clamp-3">
                   {article.excerpt}
                 </p>
-                
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center">
@@ -224,7 +223,6 @@ const NewsSection = () => {
                   </div>
                   <span>{article.readTime}</span>
                 </div>
-                
                 <div className="flex items-center justify-between pt-2 border-t border-border">
                   <div className="flex items-center space-x-4 text-xs text-muted-foreground">
                     <div className="flex items-center">
@@ -236,16 +234,15 @@ const NewsSection = () => {
                       <span>{article.shares}</span>
                     </div>
                   </div>
-                  
                   <div className="text-xs text-muted-foreground">
                     {formatDate(article.date)}
                   </div>
                 </div>
-                
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="w-full border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black"
+                  onClick={() => setExpandedArticle(article)}
                 >
                   Read Full Article
                   <ArrowRight className="ml-2 h-3 w-3" />
@@ -258,15 +255,33 @@ const NewsSection = () => {
         {/* Load More and Newsletter Signup */}
         <div className="mt-12 space-y-8">
           <div className="text-center">
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black px-8 py-6 text-lg font-semibold"
-            >
-              Load More Articles
-            </Button>
+            {!allLoaded ? (
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black px-8 py-6 text-lg font-semibold"
+                onClick={() => {
+                  if (articlesToShow >= filteredNews.length) {
+                    setAllLoaded(true);
+                  } else {
+                    setArticlesToShow((prev) => {
+                      const next = prev + 3;
+                      if (next >= filteredNews.length) {
+                        setAllLoaded(true);
+                        return filteredNews.length;
+                      }
+                      return next;
+                    });
+                  }
+                }}
+              >
+                Load More Articles
+              </Button>
+            ) : (
+              <div className="text-rcb-gold font-semibold text-lg mt-4">All articles loaded.</div>
+            )}
           </div>
-          
+
           {/* Newsletter Signup */}
           <div className="bg-gradient-to-r from-rcb-red/10 to-rcb-gold/10 rounded-2xl p-8 text-center">
             <h3 className="text-2xl font-bold mb-4">Never Miss an Update</h3>
@@ -274,8 +289,8 @@ const NewsSection = () => {
               Subscribe to our newsletter and get the latest RCB news delivered to your inbox
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-rcb-red"
               />
@@ -285,6 +300,23 @@ const NewsSection = () => {
             </div>
           </div>
         </div>
+        {/* Article Modal */}
+        {expandedArticle && (
+          <Dialog open={!!expandedArticle} onOpenChange={() => setExpandedArticle(null)}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{expandedArticle.title}</DialogTitle>
+                <DialogDescription>
+                  <div className="mb-2 text-muted-foreground">
+                    <span>By {expandedArticle.author} | {formatDate(expandedArticle.date)} | {expandedArticle.readTime}</span>
+                  </div>
+                  <div className="mb-4">{expandedArticle.excerpt}</div>
+                  <div className="text-sm text-muted-foreground">(Full article content goes here...)</div>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </section>
   );

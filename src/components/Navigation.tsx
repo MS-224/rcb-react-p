@@ -7,12 +7,12 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: 'Home', href: '#home', icon: Home },
-    { name: 'Team', href: '#team', icon: Users },
-    { name: 'Fixtures', href: '#fixtures', icon: Calendar },
-    { name: 'Gallery', href: '#gallery', icon: ImageIcon },
-    { name: 'News', href: '#news', icon: Newspaper },
-    { name: 'Shop', href: '#shop', icon: ShoppingBag },
+    { name: 'Home', to: '/', icon: Home },
+    { name: 'Team', to: '/team', icon: Users },
+    { name: 'Fixtures', to: '/fixtures', icon: Calendar },
+    { name: 'Gallery', to: '/gallery', icon: ImageIcon },
+    { name: 'News', to: '/news', icon: Newspaper },
+    { name: 'Shop', to: '/shop', icon: ShoppingBag },
   ];
 
   return (
@@ -30,13 +30,13 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.to}
                 className="text-white hover:text-rcb-gold transition-colors duration-200 font-medium"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
             <div className="flex items-center space-x-4 ml-4">
               <Link to="/signin">
@@ -72,15 +72,15 @@ const Navigation = () => {
               {navItems.map((item) => {
                 const IconComponent = item.icon;
                 return (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.to}
                     className="flex items-center space-x-3 text-white hover:text-rcb-gold block px-3 py-2 rounded-md transition-colors duration-200"
                     onClick={() => setIsOpen(false)}
                   >
                     <IconComponent size={20} />
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
                 );
               })}
             </div>

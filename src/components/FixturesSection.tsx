@@ -77,7 +77,7 @@ const FixturesSection = () => {
     ]
   };
 
-  const currentFixtures = fixtures[selectedTab as keyof typeof fixtures];
+  const allFixtures = [...fixtures.upcoming, ...fixtures.completed];
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -87,6 +87,20 @@ const FixturesSection = () => {
       month: 'long', 
       day: 'numeric' 
     });
+  };
+
+  // Add a mapping for team logos
+  const teamLogos = {
+    'RCB': '/placeholder.svg',
+    'Mumbai Indians': '/placeholder.svg',
+    'Chennai Super Kings': '/placeholder.svg',
+    'Delhi Capitals': '/placeholder.svg',
+    'Kolkata Knight Riders': '/placeholder.svg',
+    'Punjab Kings': '/placeholder.svg',
+    'Rajasthan Royals': '/placeholder.svg',
+    'Sunrisers Hyderabad': '/placeholder.svg',
+    'Lucknow Super Giants': '/placeholder.svg',
+    'Gujarat Titans': '/placeholder.svg',
   };
 
   return (
@@ -100,142 +114,305 @@ const FixturesSection = () => {
             Don't miss a single moment of RCB action. Book your tickets now!
           </p>
         </div>
-
-        {/* Tab Navigation */}
+        {/* Toggle Tabs */}
         <div className="flex justify-center mb-8">
           <div className="bg-background rounded-full p-1 flex shadow-lg">
             <Button
               variant={selectedTab === 'upcoming' ? 'default' : 'ghost'}
-              className={`rounded-full px-8 py-2 ${selectedTab === 'upcoming' 
-                ? 'bg-rcb-red text-white hover:bg-rcb-red/90' 
-                : 'text-foreground hover:text-rcb-red'}`}
+              className={`rounded-full px-8 py-2 ${selectedTab === 'upcoming' ? 'bg-rcb-red text-white hover:bg-rcb-red/90' : 'text-foreground hover:text-rcb-red'}`}
               onClick={() => setSelectedTab('upcoming')}
             >
-              <Calendar className="mr-2 h-4 w-4" />
               Upcoming Matches
             </Button>
             <Button
               variant={selectedTab === 'completed' ? 'default' : 'ghost'}
-              className={`rounded-full px-8 py-2 ${selectedTab === 'completed' 
-                ? 'bg-rcb-red text-white hover:bg-rcb-red/90' 
-                : 'text-foreground hover:text-rcb-red'}`}
+              className={`rounded-full px-8 py-2 ${selectedTab === 'completed' ? 'bg-rcb-gold text-rcb-black hover:bg-rcb-gold/90' : 'text-foreground hover:text-rcb-gold'}`}
               onClick={() => setSelectedTab('completed')}
             >
-              <Trophy className="mr-2 h-4 w-4" />
-              Recent Results
+              Completed Matches
+            </Button>
+            <Button
+              variant={selectedTab === 'full' ? 'default' : 'ghost'}
+              className={`rounded-full px-8 py-2 ${selectedTab === 'full' ? 'bg-rcb-black text-white hover:bg-rcb-black/90' : 'text-foreground hover:text-rcb-black'}`}
+              onClick={() => setSelectedTab('full')}
+            >
+              Full Schedule
             </Button>
           </div>
         </div>
-
-        {/* Fixtures Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {currentFixtures.map((fixture) => (
-            <Card key={fixture.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-rcb-red/50">
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-rcb-gold text-rcb-black">
-                    {fixture.matchType}
-                  </Badge>
-                  <div className="text-right text-sm text-muted-foreground">
-                    {formatDate(fixture.date)}
-                  </div>
-                </div>
-                <CardTitle className="text-2xl group-hover:text-rcb-red transition-colors">
-                  RCB vs {fixture.opponent}
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                {/* Match Details */}
-                <div className="space-y-3">
-                  <div className="flex items-center text-muted-foreground">
-                    <MapPin className="h-4 w-4 mr-2 text-rcb-red" />
-                    <span className="text-sm">{fixture.venue}</span>
-                  </div>
-                  <div className="flex items-center text-muted-foreground">
-                    <Clock className="h-4 w-4 mr-2 text-rcb-red" />
-                    <span className="text-sm">{fixture.time} IST</span>
-                  </div>
-                </div>
-
-                {/* Upcoming Match Actions */}
-                {selectedTab === 'upcoming' && (
-                  <div className="pt-4 border-t border-border">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center">
-                        <Ticket className="h-4 w-4 mr-2 text-rcb-gold" />
-                        <span className="text-sm font-medium">{fixture.ticketPrice}</span>
-                      </div>
-                      {fixture.ticketsAvailable ? (
-                        <Badge variant="outline" className="border-green-500 text-green-500">
-                          Available
-                        </Badge>
-                      ) : (
-                        <Badge variant="outline" className="border-red-500 text-red-500">
-                          Sold Out
-                        </Badge>
-                      )}
-                    </div>
-                    
-                    <Button 
-                      className={`w-full ${fixture.ticketsAvailable 
-                        ? 'bg-rcb-red hover:bg-rcb-red/90 text-white' 
-                        : 'bg-muted text-muted-foreground cursor-not-allowed'}`}
-                      disabled={!fixture.ticketsAvailable}
-                    >
-                      {fixture.ticketsAvailable ? (
-                        <>
-                          <Ticket className="mr-2 h-4 w-4" />
-                          Book Tickets
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </>
-                      ) : (
-                        'Tickets Sold Out'
-                      )}
-                    </Button>
-                  </div>
-                )}
-
-                {/* Completed Match Results */}
-                {selectedTab === 'completed' && 'result' in fixture && (
-                  <div className="pt-4 border-t border-border">
-                    <div className="text-center mb-3">
-                      <Badge 
-                        className={`${fixture.result.includes('Won') 
-                          ? 'bg-green-500 text-white' 
-                          : 'bg-red-500 text-white'}`}
-                      >
-                        {fixture.result}
+        {/* Section Rendering */}
+        {selectedTab === 'upcoming' && (
+          <div className="mb-10">
+            <h3 className="text-2xl font-bold mb-6 text-rcb-red text-center">Upcoming Matches</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+              {fixtures.upcoming.map((fixture) => (
+                <Card key={fixture.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-rcb-red/50">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <Badge className="bg-rcb-gold text-rcb-black">
+                        {fixture.matchType}
                       </Badge>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div className="p-3 bg-rcb-red/10 rounded-lg">
-                        <div className="text-sm font-medium text-rcb-red mb-1">RCB</div>
-                        <div className="text-lg font-bold">{fixture.scoreRCB}</div>
-                      </div>
-                      <div className="p-3 bg-muted rounded-lg">
-                        <div className="text-sm font-medium mb-1">{fixture.opponent}</div>
-                        <div className="text-lg font-bold">{fixture.scoreOpp}</div>
+                      <div className="text-right text-sm text-muted-foreground">
+                        {formatDate(fixture.date)}
                       </div>
                     </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-12">
-          <Button 
-            size="lg" 
-            className="bg-rcb-gold text-rcb-black hover:bg-rcb-gold/90 px-8 py-6 text-lg font-semibold"
-          >
-            View Full Schedule
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
+                    <div className="flex items-center justify-center gap-6 mb-2">
+                      <img src={teamLogos[fixture.opponent] || '/placeholder.svg'} alt={fixture.opponent} className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                      <span className="text-lg font-bold text-white bg-rcb-black px-2 py-1 rounded">vs</span>
+                      <img src={teamLogos['RCB']} alt="RCB" className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                    </div>
+                    <CardTitle className="text-2xl group-hover:text-rcb-red transition-colors text-center">
+                      RCB vs {fixture.opponent}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center text-muted-foreground">
+                        <MapPin className="h-4 w-4 mr-2 text-rcb-red" />
+                        <span className="text-sm">{fixture.venue}</span>
+                      </div>
+                      <div className="flex items-center text-muted-foreground">
+                        <Clock className="h-4 w-4 mr-2 text-rcb-red" />
+                        <span className="text-sm">{fixture.time} IST</span>
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-border">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center">
+                          <Ticket className="h-4 w-4 mr-2 text-rcb-gold" />
+                          <span className="text-sm font-medium">{fixture.ticketPrice}</span>
+                        </div>
+                        {fixture.ticketsAvailable ? (
+                          <Badge variant="outline" className="border-green-500 text-green-500">
+                            Available
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="border-red-500 text-red-500">
+                            Sold Out
+                          </Badge>
+                        )}
+                      </div>
+                      <Button
+                        className={`w-full ${fixture.ticketsAvailable
+                          ? 'bg-rcb-red hover:bg-rcb-red/90 text-white'
+                          : 'bg-muted text-muted-foreground cursor-not-allowed'}`}
+                        disabled={!fixture.ticketsAvailable}
+                      >
+                        {fixture.ticketsAvailable ? (
+                          <>
+                            <Ticket className="mr-2 h-4 w-4" />
+                            Book Tickets
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </>
+                        ) : (
+                          'Tickets Sold Out'
+                        )}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+        {selectedTab === 'completed' && (
+          <div>
+            <h3 className="text-2xl font-bold mb-6 text-rcb-gold text-center">Completed Matches</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+              {fixtures.completed.map((fixture) => (
+                <Card key={fixture.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-rcb-red/50">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <Badge className="bg-rcb-gold text-rcb-black">
+                        {fixture.matchType}
+                      </Badge>
+                      <div className="text-right text-sm text-muted-foreground">
+                        {formatDate(fixture.date)}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-center gap-6 mb-2">
+                      <img src={teamLogos[fixture.opponent] || '/placeholder.svg'} alt={fixture.opponent} className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                      <span className="text-lg font-bold text-white bg-rcb-black px-2 py-1 rounded">vs</span>
+                      <img src={teamLogos['RCB']} alt="RCB" className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                    </div>
+                    <CardTitle className="text-2xl group-hover:text-rcb-red transition-colors text-center">
+                      RCB vs {fixture.opponent}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center text-muted-foreground">
+                        <MapPin className="h-4 w-4 mr-2 text-rcb-red" />
+                        <span className="text-sm">{fixture.venue}</span>
+                      </div>
+                      <div className="flex items-center text-muted-foreground">
+                        <Clock className="h-4 w-4 mr-2 text-rcb-red" />
+                        <span className="text-sm">{fixture.time} IST</span>
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-border">
+                      <div className="text-center mb-3">
+                        <Badge
+                          className={`${fixture.result.includes('Won')
+                            ? 'bg-green-500 text-white'
+                            : 'bg-red-500 text-white'}`}
+                        >
+                          {fixture.result}
+                        </Badge>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 text-center">
+                        <div className="p-3 bg-rcb-red/10 rounded-lg">
+                          <div className="text-sm font-medium text-rcb-red mb-1">RCB</div>
+                          <div className="text-lg font-bold">{fixture.scoreRCB}</div>
+                        </div>
+                        <div className="p-3 bg-muted rounded-lg">
+                          <div className="text-sm font-medium mb-1">{fixture.opponent}</div>
+                          <div className="text-lg font-bold">{fixture.scoreOpp}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+        {selectedTab === 'full' && (
+          <>
+            <div className="mb-10">
+              <h3 className="text-2xl font-bold mb-6 text-rcb-red text-center">Upcoming Matches</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                {fixtures.upcoming.map((fixture) => (
+                  <Card key={fixture.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-rcb-red/50">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between">
+                        <Badge className="bg-rcb-gold text-rcb-black">
+                          {fixture.matchType}
+                        </Badge>
+                        <div className="text-right text-sm text-muted-foreground">
+                          {formatDate(fixture.date)}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-center gap-6 mb-2">
+                        <img src={teamLogos[fixture.opponent] || '/placeholder.svg'} alt={fixture.opponent} className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                        <span className="text-lg font-bold text-white bg-rcb-black px-2 py-1 rounded">vs</span>
+                        <img src={teamLogos['RCB']} alt="RCB" className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                      </div>
+                      <CardTitle className="text-2xl group-hover:text-rcb-red transition-colors text-center">
+                        RCB vs {fixture.opponent}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center text-muted-foreground">
+                          <MapPin className="h-4 w-4 mr-2 text-rcb-red" />
+                          <span className="text-sm">{fixture.venue}</span>
+                        </div>
+                        <div className="flex items-center text-muted-foreground">
+                          <Clock className="h-4 w-4 mr-2 text-rcb-red" />
+                          <span className="text-sm">{fixture.time} IST</span>
+                        </div>
+                      </div>
+                      <div className="pt-4 border-t border-border">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center">
+                            <Ticket className="h-4 w-4 mr-2 text-rcb-gold" />
+                            <span className="text-sm font-medium">{fixture.ticketPrice}</span>
+                          </div>
+                          {fixture.ticketsAvailable ? (
+                            <Badge variant="outline" className="border-green-500 text-green-500">
+                              Available
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="border-red-500 text-red-500">
+                              Sold Out
+                            </Badge>
+                          )}
+                        </div>
+                        <Button
+                          className={`w-full ${fixture.ticketsAvailable
+                            ? 'bg-rcb-red hover:bg-rcb-red/90 text-white'
+                            : 'bg-muted text-muted-foreground cursor-not-allowed'}`}
+                          disabled={!fixture.ticketsAvailable}
+                        >
+                          {fixture.ticketsAvailable ? (
+                            <>
+                              <Ticket className="mr-2 h-4 w-4" />
+                              Book Tickets
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </>
+                          ) : (
+                            'Tickets Sold Out'
+                          )}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold mb-6 text-rcb-gold text-center">Completed Matches</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                {fixtures.completed.map((fixture) => (
+                  <Card key={fixture.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-rcb-red/50">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between">
+                        <Badge className="bg-rcb-gold text-rcb-black">
+                          {fixture.matchType}
+                        </Badge>
+                        <div className="text-right text-sm text-muted-foreground">
+                          {formatDate(fixture.date)}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-center gap-6 mb-2">
+                        <img src={teamLogos[fixture.opponent] || '/placeholder.svg'} alt={fixture.opponent} className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                        <span className="text-lg font-bold text-white bg-rcb-black px-2 py-1 rounded">vs</span>
+                        <img src={teamLogos['RCB']} alt="RCB" className="w-14 h-14 rounded-full bg-white object-contain border-2 border-rcb-gold" />
+                      </div>
+                      <CardTitle className="text-2xl group-hover:text-rcb-red transition-colors text-center">
+                        RCB vs {fixture.opponent}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center text-muted-foreground">
+                          <MapPin className="h-4 w-4 mr-2 text-rcb-red" />
+                          <span className="text-sm">{fixture.venue}</span>
+                        </div>
+                        <div className="flex items-center text-muted-foreground">
+                          <Clock className="h-4 w-4 mr-2 text-rcb-red" />
+                          <span className="text-sm">{fixture.time} IST</span>
+                        </div>
+                      </div>
+                      <div className="pt-4 border-t border-border">
+                        <div className="text-center mb-3">
+                          <Badge
+                            className={`${fixture.result.includes('Won')
+                              ? 'bg-green-500 text-white'
+                              : 'bg-red-500 text-white'}`}
+                          >
+                            {fixture.result}
+                          </Badge>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 text-center">
+                          <div className="p-3 bg-rcb-red/10 rounded-lg">
+                            <div className="text-sm font-medium text-rcb-red mb-1">RCB</div>
+                            <div className="text-lg font-bold">{fixture.scoreRCB}</div>
+                          </div>
+                          <div className="p-3 bg-muted rounded-lg">
+                            <div className="text-sm font-medium mb-1">{fixture.opponent}</div>
+                            <div className="text-lg font-bold">{fixture.scoreOpp}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

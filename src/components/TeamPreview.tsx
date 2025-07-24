@@ -10,20 +10,16 @@ const TeamPreview = () => {
     {
       id: 1,
       name: 'Virat Kohli',
-      role: 'Batter',
-      team: 'Men\'s Team',
-      matches: 245,
-      runs: 7263,
-      description: 'Former captain and batting legend, known for his aggressive style and match-winning performances.'
+      image: '/placeholder.svg', // Replace with real image if available
+      jersey: 18,
+      team: 'Men',
     },
     {
       id: 2,
       name: 'Smriti Mandhana',
-      role: 'Batter',
-      team: 'Women\'s Team',
-      matches: 89,
-      runs: 3267,
-      description: 'Dynamic captain leading from the front with elegant batting and strategic gameplay.'
+      image: '/placeholder.svg', // Replace with real image if available
+      jersey: 18,
+      team: 'Women',
     }
   ];
 
@@ -42,50 +38,24 @@ const TeamPreview = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
           {captains.map((captain) => (
             <Card key={captain.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-rcb-red/50">
-              <CardContent className="p-8">
-                <div className="relative mb-6">
-                  <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-rcb-red to-rcb-gold p-1">
-                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                      <span className="text-4xl font-bold text-rcb-red">
-                        {captain.name.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="absolute -top-2 -right-2">
-                    <Badge className="bg-rcb-gold text-rcb-black">
-                      <Star className="h-4 w-4 mr-1" />
-                      Captain
-                    </Badge>
-                  </div>
+              <CardContent className="p-0 relative">
+                {/* Jersey Number Top Left */}
+                <div className="absolute top-3 left-3 z-10">
+                  <span className="bg-rcb-black text-rcb-gold font-bold text-lg px-3 py-1 rounded-full shadow">{captain.jersey}</span>
                 </div>
-                
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-rcb-red transition-colors">
+                {/* Team Badge Top Right */}
+                <div className="absolute top-3 right-3 z-10">
+                  <span className={`bg-rcb-gold text-rcb-black font-bold text-xs px-3 py-1 rounded-full shadow`}>
+                    {captain.team === 'Men' ? '#mens' : '#woment'}
+                  </span>
+                </div>
+                {/* Full Size Image */}
+                <img src={captain.image} alt={captain.name} className="w-full h-80 object-cover rounded-t-lg" />
+                {/* Name Centered Below Image */}
+                <div className="text-center py-6">
+                  <h3 className="text-2xl font-bold group-hover:text-rcb-red transition-colors">
                     {captain.name}
                   </h3>
-                  <div className="flex justify-center gap-2 mb-4">
-                    <Badge variant="outline" className="border-rcb-gold text-rcb-gold">
-                      {captain.role}
-                    </Badge>
-                    <Badge variant="outline" className="border-rcb-red text-rcb-red">
-                      {captain.team}
-                    </Badge>
-                  </div>
-                  
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {captain.description}
-                  </p>
-                  
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="bg-muted/50 rounded-lg p-3">
-                      <div className="text-muted-foreground">Matches</div>
-                      <div className="text-2xl font-bold text-rcb-red">{captain.matches}</div>
-                    </div>
-                    <div className="bg-muted/50 rounded-lg p-3">
-                      <div className="text-muted-foreground">Runs</div>
-                      <div className="text-2xl font-bold text-rcb-red">{captain.runs}</div>
-                    </div>
-                  </div>
                 </div>
               </CardContent>
             </Card>

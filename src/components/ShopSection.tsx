@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ShoppingCart, Heart, Star, Filter, Search, Truck, Shield, RotateCcw } from 'lucide-react';
+import { ShoppingCart, Heart, Star, Filter, Search, Truck, Shield, RotateCcw, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -135,9 +135,51 @@ const ShopSection = () => {
     setCartItems(prev => [...prev, productId]);
   };
 
+  const removeFromCart = (productId: number) => {
+    setCartItems(prev => prev.filter(id => id !== productId));
+  };
+
+  const cartProducts = cartItems.map(id => products.find(p => p.id === id)).filter(Boolean);
+  const totalPrice = cartProducts.reduce((sum, p) => sum + (p?.price || 0), 0);
+
   return (
     <section id="shop" className="py-20 bg-background">
       <div className="container mx-auto px-4">
+        {/* Cart Section */}
+        <div className="mb-8">
+          <div className="bg-white rounded-xl shadow p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex-1">
+              <h3 className="text-xl font-bold mb-2 flex items-center">
+                <ShoppingCart className="mr-2 h-6 w-6 text-rcb-red" /> Cart
+              </h3>
+              {cartProducts.length === 0 ? (
+                <div className="text-muted-foreground">Your cart is empty.</div>
+              ) : (
+                <ul className="divide-y divide-border">
+                  {cartProducts.map((product: any) => (
+                    <li key={product.id} className="flex items-center justify-between py-2">
+                      <div className="flex items-center gap-2">
+                        <img src={product.image} alt={product.name} className="w-10 h-10 rounded object-cover border" />
+                        <span className="font-medium">{product.name}</span>
+                        <span className="text-rcb-red font-bold ml-2">₹{product.price.toLocaleString()}</span>
+                      </div>
+                      <Button size="icon" variant="ghost" onClick={() => removeFromCart(product.id)}>
+                        <X className="h-4 w-4 text-rcb-red" />
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="flex flex-col items-end gap-2">
+              <div className="font-semibold text-lg">Total: <span className="text-rcb-red">₹{totalPrice.toLocaleString()}</span></div>
+              <Button className="bg-rcb-gold text-rcb-black hover:bg-rcb-gold/90" disabled={cartProducts.length === 0} onClick={() => alert('Checkout coming soon!')}>
+                Checkout
+              </Button>
+            </div>
+          </div>
+        </div>
+
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-rcb-red to-rcb-gold bg-clip-text text-transparent">
             RCB STORE
@@ -158,7 +200,7 @@ const ShopSection = () => {
               className="pl-10"
             />
           </div>
-          
+
           <div className="flex gap-2 flex-wrap">
             {categories.map((category) => (
               <Button
@@ -166,8 +208,8 @@ const ShopSection = () => {
                 variant={selectedCategory === category ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category 
-                  ? 'bg-rcb-gold text-rcb-black hover:bg-rcb-gold/90' 
+                className={selectedCategory === category
+                  ? 'bg-rcb-gold text-rcb-black hover:bg-rcb-gold/90'
                   : 'border-rcb-gold text-rcb-gold hover:bg-rcb-gold hover:text-rcb-black'}
               >
                 <Filter className="mr-1 h-3 w-3" />
@@ -185,7 +227,7 @@ const ShopSection = () => {
                 {/* Product Image */}
                 <div className="aspect-square bg-gradient-to-br from-rcb-red/10 to-rcb-gold/10 flex items-center justify-center rounded-t-lg relative overflow-hidden">
                   <ShoppingCart className="h-16 w-16 text-rcb-red/30" />
-                  
+
                   {/* Badges */}
                   <div className="absolute top-2 left-2 flex flex-col gap-1">
                     {product.bestseller && (
@@ -215,21 +257,21 @@ const ShopSection = () => {
                   </Button>
                 </div>
               </CardHeader>
-              
+
               <CardContent className="p-4 space-y-3">
                 <div>
                   <h3 className="font-semibold text-sm group-hover:text-rcb-red transition-colors line-clamp-2">
                     {product.name}
                   </h3>
-                  
+
                   {/* Rating */}
                   <div className="flex items-center space-x-1 mt-1">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`h-3 w-3 ${i < Math.floor(product.rating) 
-                            ? 'text-yellow-400 fill-current' 
+                          className={`h-3 w-3 ${i < Math.floor(product.rating)
+                            ? 'text-yellow-400 fill-current'
                             : 'text-gray-300'}`}
                         />
                       ))}
@@ -269,7 +311,7 @@ const ShopSection = () => {
                 )}
 
                 {/* Add to Cart Button */}
-                <Button 
+                <Button
                   className="w-full bg-rcb-red hover:bg-rcb-red/90 text-white"
                   onClick={() => addToCart(product.id)}
                 >
