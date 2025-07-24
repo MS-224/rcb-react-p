@@ -1,0 +1,131 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, Mail, Lock, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+const SignInPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle sign in logic here
+    console.log('Sign in:', { email, password });
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Left: Logo and gradient */}
+      <div className="md:w-1/2 flex items-center justify-center bg-gradient-to-br from-rcb-red to-black p-8">
+        <div className="flex flex-col items-center">
+          <img src="/rcb-hero.jpg" alt="RCB Logo" className="w-72 h-72 object-contain mb-6" />
+          <div className="signin-title-wrap">
+            <span className="block text-6xl font-extrabold text-rcb-gold tracking-tight mb-2">RCB</span>
+            <span className="signin-subtitle">ROYAL CHALLENGERS BENGALURU</span>
+          </div>
+        </div>
+      </div>
+      {/* Right: Form */}
+      <div className="md:w-1/2 flex items-center justify-center bg-gradient-to-br from-rcb-black via-rcb-red/10 to-rcb-gold/10 p-4 min-h-screen">
+        <Card className="w-full max-w-md p-8 relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4 z-10 text-rcb-red hover:text-rcb-gold"
+            onClick={() => navigate('/')}
+            aria-label="Close"
+          >
+            <X className="signin-close-icon" />
+          </Button>
+          <CardHeader className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-r from-rcb-red to-rcb-gold rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-white font-bold text-2xl">RCB</span>
+            </div>
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-rcb-red to-rcb-gold bg-clip-text text-transparent">
+              Welcome Back
+            </CardTitle>
+            <CardDescription>
+              Sign in to your RCB account to access exclusive content
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-12 py-4 text-lg"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-12 py-4 text-lg"
+                    required
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="signin-password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="signin-password-toggle-icon" />
+                    ) : (
+                      <Eye className="signin-password-toggle-icon" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+              <div className="signin-links">
+                <Link
+                  to="/forgot-password"
+                  className="signin-forgot-link"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+              <Button type="submit" className="w-full bg-rcb-red hover:bg-rcb-red/90 text-white text-lg py-4 rounded-xl font-bold">
+                Sign In
+              </Button>
+              <div className="text-center">
+                <span className="signin-signup-text">
+                  Don't have an account?{' '}
+                  <Link
+                    to="/signup"
+                    className="signin-signup-link"
+                  >
+                    Sign up
+                  </Link>
+                </span>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export default SignInPage;
