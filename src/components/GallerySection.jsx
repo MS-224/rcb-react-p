@@ -4,15 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import p1 from '@/assets/gallery/p1.jpg';
-import p2 from '@/assets/gallery/p2.jpg';
-import p3 from '@/assets/gallery/p3.jpeg';
-import p4 from '@/assets/gallery/p4.png';
-import celeb1 from '@/assets/gallery/celeb-1.jpg';
-import celeb2 from '@/assets/gallery/celeb-2.jpg';
-import celeb3 from '@/assets/gallery/celeb-3.jpg';
-import rcbCup from '@/assets/gallery/rcb-cup.jpg';
-import t1 from '@/assets/gallery/t-1.png';
 
 const GallerySection = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -30,7 +21,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'matches',
       title: 'Virat Kohli Century Celebration',
-      url: p1,
+      url: '/placeholder.svg',
       likes: 12500,
       date: '2024-03-10'
     },
@@ -39,7 +30,7 @@ const GallerySection = () => {
       type: 'video',
       category: 'matches',
       title: 'Match Winning Six by Maxwell',
-      url: t1,
+      url: '/placeholder.svg',
       likes: 8900,
       date: '2024-03-08',
       duration: '0:45'
@@ -49,7 +40,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'training',
       title: 'Team Practice Session',
-      url: p2,
+      url: '/placeholder.svg',
       likes: 5600,
       date: '2024-03-05'
     },
@@ -58,7 +49,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'celebrations',
       title: 'Victory Lap at Chinnaswamy',
-      url: celeb1,
+      url: '/placeholder.svg',
       likes: 15200,
       date: '2024-03-03'
     },
@@ -67,7 +58,7 @@ const GallerySection = () => {
       type: 'video',
       category: 'behind-scenes',
       title: 'Dressing Room Celebrations',
-      url: t1,
+      url: '/placeholder.svg',
       likes: 9800,
       date: '2024-03-01',
       duration: '1:20'
@@ -77,7 +68,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'matches',
       title: 'Faf du Plessis Power Hitting',
-      url: p3,
+      url: '/placeholder.svg',
       likes: 7300,
       date: '2024-02-28'
     },
@@ -86,7 +77,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'training',
       title: 'Bowling Practice with Siraj',
-      url: p4,
+      url: '/placeholder.svg',
       likes: 4200,
       date: '2024-02-25'
     },
@@ -95,7 +86,7 @@ const GallerySection = () => {
       type: 'video',
       category: 'celebrations',
       title: 'Fan Interaction at Stadium',
-      url: t1,
+      url: '/placeholder.svg',
       likes: 11400,
       date: '2024-02-22',
       duration: '2:15'
@@ -105,7 +96,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'celebrations',
       title: 'RCB Lifts the Cup',
-      url: rcbCup,
+      url: '/placeholder.svg',
       likes: 20000,
       date: '2024-02-20'
     },
@@ -114,7 +105,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'celebrations',
       title: 'Fans Cheering',
-      url: celeb2,
+      url: '/placeholder.svg',
       likes: 9000,
       date: '2024-02-18'
     },
@@ -123,7 +114,7 @@ const GallerySection = () => {
       type: 'image',
       category: 'celebrations',
       title: 'Team Group Photo',
-      url: celeb3,
+      url: '/placeholder.svg',
       likes: 11000,
       date: '2024-02-16'
     },

@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Play, Pause, VolumeX, Volume2, ArrowRight } from 'lucide-react';
-import heroVid from '@/assets/hero-vid.mp4';
 import { Link } from 'react-router-dom';
 
 const HeroSection = ({ videoRef, isMuted, isPlaying, handlePlayPause, handleMuteToggle }) => {
@@ -10,7 +9,7 @@ const HeroSection = ({ videoRef, isMuted, isPlaying, handlePlayPause, handleMute
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
-        src={heroVid}
+        src="/placeholder-video.mp4"
         autoPlay
         loop
         muted={isMuted}

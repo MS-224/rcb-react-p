@@ -5,20 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import men1 from '@/assets/mensteam/asset1.png';
-import men2 from '@/assets/mensteam/asset2.png';
-import men3 from '@/assets/mensteam/asset3.png';
-import men4 from '@/assets/mensteam/asset4.png';
-import men5 from '@/assets/mensteam/asset5.png';
-import men6 from '@/assets/mensteam/asset6.png';
-import men7 from '@/assets/mensteam/asset7.png';
-import men8 from '@/assets/mensteam/asset8.png';
-import women1 from '@/assets/womensteam/asset1.png';
-import women2 from '@/assets/womensteam/asset2.png';
-import women3 from '@/assets/womensteam/asset3.png';
-import women4 from '@/assets/womensteam/asset4.png';
-import women5 from '@/assets/womensteam/asset5.png';
-import women6 from '@/assets/womensteam/asset6.png';
 
 const TeamSection = () => {
   const [selectedTeam, setSelectedTeam] = useState('men');
@@ -28,22 +14,22 @@ const TeamSection = () => {
 
   // Add jersey numbers and detailed stats for all players
   const menPlayers = [
-    { id: 1, name: 'Virat Kohli', role: 'Batter', image: men1, jersey: 18, matches: 245, runs: 7263, avg: 37.25, highScore: 113, sr: 130.02, captain: true },
-    { id: 2, name: 'Faf du Plessis', role: 'Batter', image: men2, jersey: 18, matches: 124, runs: 3890, avg: 34.50, highScore: 96, sr: 131.22, captain: false },
-    { id: 3, name: 'Glenn Maxwell', role: 'All-Rounder', image: men3, jersey: 32, matches: 103, runs: 2771, avg: 25.10, highScore: 95, sr: 153.88, wickets: 30, economy: 7.8, bowlAvg: 25.2, bowlSR: 19.5, captain: false },
-    { id: 4, name: 'Mohammed Siraj', role: 'Bowler', image: men4, jersey: 13, matches: 93, wickets: 91, economy: 8.4, bowlAvg: 27.1, bowlSR: 19.2, captain: false },
-    { id: 5, name: 'Wanindu Hasaranga', role: 'All-Rounder', image: men5, jersey: 49, matches: 34, wickets: 43, economy: 7.7, bowlAvg: 20.5, bowlSR: 16.8, runs: 250, avg: 18.2, highScore: 37, sr: 120.1, captain: false },
-    { id: 6, name: 'Josh Hazlewood', role: 'Bowler', image: men6, jersey: 38, matches: 12, wickets: 12, economy: 7.9, bowlAvg: 23.4, bowlSR: 18.7, captain: false },
-    { id: 7, name: 'Dinesh Karthik', role: 'Wicket-Keeper', image: men7, jersey: 19, matches: 232, runs: 4127, avg: 26.5, highScore: 97, sr: 134.2, captain: false },
-    { id: 8, name: 'Harshal Patel', role: 'Bowler', image: men8, jersey: 9, matches: 67, wickets: 65, economy: 8.5, bowlAvg: 24.8, bowlSR: 17.9, captain: false },
+    { id: 1, name: 'Virat Kohli', role: 'Batter', image: '/placeholder.svg', jersey: 18, matches: 245, runs: 7263, avg: 37.25, highScore: 113, sr: 130.02, captain: true },
+    { id: 2, name: 'Faf du Plessis', role: 'Batter', image: '/placeholder.svg', jersey: 18, matches: 124, runs: 3890, avg: 34.50, highScore: 96, sr: 131.22, captain: false },
+    { id: 3, name: 'Glenn Maxwell', role: 'All-Rounder', image: '/placeholder.svg', jersey: 32, matches: 103, runs: 2771, avg: 25.10, highScore: 95, sr: 153.88, wickets: 30, economy: 7.8, bowlAvg: 25.2, bowlSR: 19.5, captain: false },
+    { id: 4, name: 'Mohammed Siraj', role: 'Bowler', image: '/placeholder.svg', jersey: 13, matches: 93, wickets: 91, economy: 8.4, bowlAvg: 27.1, bowlSR: 19.2, captain: false },
+    { id: 5, name: 'Wanindu Hasaranga', role: 'All-Rounder', image: '/placeholder.svg', jersey: 49, matches: 34, wickets: 43, economy: 7.7, bowlAvg: 20.5, bowlSR: 16.8, runs: 250, avg: 18.2, highScore: 37, sr: 120.1, captain: false },
+    { id: 6, name: 'Josh Hazlewood', role: 'Bowler', image: '/placeholder.svg', jersey: 38, matches: 12, wickets: 12, economy: 7.9, bowlAvg: 23.4, bowlSR: 18.7, captain: false },
+    { id: 7, name: 'Dinesh Karthik', role: 'Wicket-Keeper', image: '/placeholder.svg', jersey: 19, matches: 232, runs: 4127, avg: 26.5, highScore: 97, sr: 134.2, captain: false },
+    { id: 8, name: 'Harshal Patel', role: 'Bowler', image: '/placeholder.svg', jersey: 9, matches: 67, wickets: 65, economy: 8.5, bowlAvg: 24.8, bowlSR: 17.9, captain: false },
   ];
   const womenPlayers = [
-    { id: 1, name: 'Smriti Mandhana', role: 'Batter', image: women1, jersey: 18, matches: 89, runs: 3267, avg: 28.5, highScore: 135, sr: 123.4, captain: true },
-    { id: 2, name: 'Ellyse Perry', role: 'All-Rounder', image: women2, jersey: 8, matches: 345, runs: 6453, avg: 34.2, highScore: 112, sr: 118.7, wickets: 297, economy: 6.2, bowlAvg: 21.3, bowlSR: 22.1, captain: false },
-    { id: 3, name: 'Sophie Devine', role: 'All-Rounder', image: women3, jersey: 77, matches: 298, runs: 5897, avg: 31.1, highScore: 99, sr: 129.5, wickets: 121, economy: 7.1, bowlAvg: 24.7, bowlSR: 20.5, captain: false },
-    { id: 4, name: 'Richa Ghosh', role: 'Wicket-Keeper', image: women4, jersey: 21, matches: 23, runs: 456, avg: 22.8, highScore: 44, sr: 110.2, captain: false },
-    { id: 5, name: 'Poonam Yadav', role: 'Bowler', image: women5, jersey: 24, matches: 123, wickets: 134, economy: 5.8, bowlAvg: 19.6, bowlSR: 18.2, captain: false },
-    { id: 6, name: 'Shafali Verma', role: 'Batter', image: women6, jersey: 17, matches: 67, runs: 1876, avg: 29.2, highScore: 89, sr: 132.7, captain: false },
+    { id: 1, name: 'Smriti Mandhana', role: 'Batter', image: '/placeholder.svg', jersey: 18, matches: 89, runs: 3267, avg: 28.5, highScore: 135, sr: 123.4, captain: true },
+    { id: 2, name: 'Ellyse Perry', role: 'All-Rounder', image: '/placeholder.svg', jersey: 8, matches: 345, runs: 6453, avg: 34.2, highScore: 112, sr: 118.7, wickets: 297, economy: 6.2, bowlAvg: 21.3, bowlSR: 22.1, captain: false },
+    { id: 3, name: 'Sophie Devine', role: 'All-Rounder', image: '/placeholder.svg', jersey: 77, matches: 298, runs: 5897, avg: 31.1, highScore: 99, sr: 129.5, wickets: 121, economy: 7.1, bowlAvg: 24.7, bowlSR: 20.5, captain: false },
+    { id: 4, name: 'Richa Ghosh', role: 'Wicket-Keeper', image: '/placeholder.svg', jersey: 21, matches: 23, runs: 456, avg: 22.8, highScore: 44, sr: 110.2, captain: false },
+    { id: 5, name: 'Poonam Yadav', role: 'Bowler', image: '/placeholder.svg', jersey: 24, matches: 123, wickets: 134, economy: 5.8, bowlAvg: 19.6, bowlSR: 18.2, captain: false },
+    { id: 6, name: 'Shafali Verma', role: 'Batter', image: '/placeholder.svg', jersey: 17, matches: 67, runs: 1876, avg: 29.2, highScore: 89, sr: 132.7, captain: false },
   ];
 
   const currentPlayers = selectedTeam === 'men' ? menPlayers : womenPlayers;

@@ -3,12 +3,6 @@ import { ImageIcon, Play, Heart, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import p1 from '@/assets/gallery/p1.jpg';
-import p2 from '@/assets/gallery/p2.jpg';
-import p3 from '@/assets/gallery/p3.jpeg';
-import p4 from '@/assets/gallery/p4.png';
-import celeb1 from '@/assets/gallery/celeb-1.jpg';
-import celeb2 from '@/assets/gallery/celeb-2.jpg';
 
 const GalleryPreview = () => {
   // Show only featured/recent gallery items
@@ -17,7 +11,7 @@ const GalleryPreview = () => {
       id: 1,
       type: 'image',
       title: 'Virat Kohli Century Celebration',
-      url: p1,
+      url: '/placeholder.svg',
       likes: 12500,
       date: '2024-03-10'
     },
@@ -25,7 +19,7 @@ const GalleryPreview = () => {
       id: 2,
       type: 'video',
       title: 'Match Winning Six by Maxwell',
-      url: p2,
+      url: '/placeholder.svg',
       likes: 8900,
       date: '2024-03-08',
       duration: '0:45'
@@ -34,7 +28,7 @@ const GalleryPreview = () => {
       id: 3,
       type: 'image',
       title: 'Victory Lap at Chinnaswamy',
-      url: p3,
+      url: '/placeholder.svg',
       likes: 15200,
       date: '2024-03-03'
     },
@@ -42,7 +36,7 @@ const GalleryPreview = () => {
       id: 4,
       type: 'video',
       title: 'Dressing Room Celebrations',
-      url: p4,
+      url: '/placeholder.svg',
       likes: 9800,
       date: '2024-03-01',
       duration: '1:20'
@@ -51,7 +45,7 @@ const GalleryPreview = () => {
       id: 5,
       type: 'image',
       title: 'Faf du Plessis Power Hitting',
-      url: celeb1,
+      url: '/placeholder.svg',
       likes: 7300,
       date: '2024-02-28'
     },
@@ -59,7 +53,7 @@ const GalleryPreview = () => {
       id: 6,
       type: 'image',
       title: 'Mohammed Siraj Bowling Action',
-      url: celeb2,
+      url: '/placeholder.svg',
       likes: 6100,
       date: '2024-02-25'
     }

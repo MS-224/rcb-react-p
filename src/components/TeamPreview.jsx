@@ -3,10 +3,6 @@ import { Star, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import menCap from '@/assets/men-cap.png';
-import womenCap from '@/assets/women-cap.png';
-import leftBg from '@/assets/captain-left-bg.png';
-import rightBg from '@/assets/captain-right-bg.png';
 
 const TeamPreview = () => {
   // Captain data
@@ -14,16 +10,16 @@ const TeamPreview = () => {
     {
       id: 1,
       name: 'Virat Kohli',
-      image: menCap,
-      bg: leftBg,
+      image: '/placeholder.svg',
+      bg: '/placeholder.svg',
       jersey: 18,
       team: 'Men',
     },
     {
       id: 2,
       name: 'Smriti Mandhana',
-      image: womenCap,
-      bg: rightBg,
+      image: '/placeholder.svg',
+      bg: '/placeholder.svg',
       jersey: 18,
       team: 'Women',
     }
