@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Home, Users, Calendar, ImageIcon, Newspaper, ShoppingBag, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import rcbLogo from "../assets/rcb-logo.png";
 
 const Navigation = ({ onCartClick, cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +18,16 @@ const Navigation = ({ onCartClick, cartCount }) => {
 
   return (
     <nav className="fixed top-0 w-full bg-rcb-black/95 backdrop-blur-sm z-50 border-b border-rcb-red/20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-[1400px]">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-rcb-red to-rcb-gold rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">RCB</span>
-            </div>
+            <img
+              src={rcbLogo}
+              alt="RCB Logo"
+              style={{ width: 72, height: 36, objectFit: "contain" }}
+              className="rounded"
+            />
             <span className="text-white font-bold text-xl hidden sm:block">Royal Challengers Bangalore</span>
           </div>
 

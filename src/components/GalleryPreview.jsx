@@ -67,7 +67,7 @@ const GalleryPreview = () => {
 
   return (
     <section id="gallery" className="py-20 bg-background">
-      <div className="container">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-rcb-red to-rcb-gold bg-clip-text text-transparent">
             GALLERY HIGHLIGHTS
@@ -77,9 +77,9 @@ const GalleryPreview = () => {
           </p>
         </div>
 
-        <div className="gallery-preview-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {featuredItems.map((item) => (
-            <div key={item.id} className="gallery-preview-card group">
+            <Card key={item.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-rcb-red/50">
               <div className="relative">
                 <div className="aspect-square bg-gradient-to-br from-rcb-red/20 to-rcb-gold/20 flex items-center justify-center">
                   {item.type === 'image' ? (
@@ -119,7 +119,7 @@ const GalleryPreview = () => {
                   <span>{new Date(item.date).toLocaleDateString()}</span>
                 </div>
               </CardContent>
-            </div>
+            </Card>
           ))}
         </div>
 

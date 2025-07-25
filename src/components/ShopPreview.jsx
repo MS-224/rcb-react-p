@@ -55,8 +55,8 @@ const ShopPreview = () => {
   ];
 
   return (
-    <section id="shop" className="shop-preview-section">
-      <div className="container">
+    <section id="shop" className="py-20 bg-background">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-rcb-red to-rcb-gold bg-clip-text text-transparent">
             RCB STORE
@@ -66,9 +66,9 @@ const ShopPreview = () => {
           </p>
         </div>
 
-        <div className="shop-preview-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {featuredProducts.map((product) => (
-            <div key={product.id} className="shop-preview-card group">
+            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-rcb-red/50">
               <CardHeader className="p-0 relative">
                 <div className="aspect-square bg-gradient-to-br from-rcb-red/10 to-rcb-gold/10 flex items-center justify-center rounded-t-lg relative overflow-hidden">
                   <ShoppingCart className="h-16 w-16 text-rcb-red/30" />
@@ -135,7 +135,7 @@ const ShopPreview = () => {
                   Add to Cart
                 </Button>
               </CardContent>
-            </div>
+            </Card>
           ))}
         </div>
 

@@ -3,6 +3,10 @@ import { Star, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import menCap from '@/assets/men-cap.png';
+import womenCap from '@/assets/women-cap.png';
+import leftBg from '@/assets/captain-left-bg.png';
+import rightBg from '@/assets/captain-right-bg.png';
 
 const TeamPreview = () => {
   // Captain data
@@ -10,21 +14,23 @@ const TeamPreview = () => {
     {
       id: 1,
       name: 'Virat Kohli',
-      image: '/placeholder.svg', // Replace with real image if available
+      image: menCap,
+      bg: leftBg,
       jersey: 18,
       team: 'Men',
     },
     {
       id: 2,
       name: 'Smriti Mandhana',
-      image: '/placeholder.svg', // Replace with real image if available
+      image: womenCap,
+      bg: rightBg,
       jersey: 18,
       team: 'Women',
     }
   ];
 
   return (
-    <section id="team" className="py-20 bg-gradient-to-b from-background to-muted/30">
+    <section id="team" className="py-20 bg-[linear-gradient(to_bottom,_#000000,_#ff0000)]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-rcb-red to-rcb-gold bg-clip-text text-transparent">
@@ -35,10 +41,12 @@ const TeamPreview = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-          {captains.map((captain) => (
-            <Card key={captain.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-rcb-red/50">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+          {captains.map((captain, idx) => (
+            <Card key={captain.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-rcb-red/50 max-w-[480px] mx-auto">
               <CardContent className="p-0 relative">
+                {/* Background Image */}
+                <img src={captain.bg} alt="bg" className={`absolute top-0 left-0 w-full h-[28rem] object-cover z-0 ${idx === 0 ? 'object-left' : 'object-right'}`} style={{ pointerEvents: 'none' }} />
                 {/* Jersey Number Top Left */}
                 <div className="absolute top-3 left-3 z-10">
                   <span className="bg-rcb-black text-rcb-gold font-bold text-lg px-3 py-1 rounded-full shadow">{captain.jersey}</span>
@@ -49,10 +57,10 @@ const TeamPreview = () => {
                     {captain.team === 'Men' ? '#mens' : '#woment'}
                   </span>
                 </div>
-                {/* Full Size Image */}
-                <img src={captain.image} alt={captain.name} className="w-full h-80 object-cover rounded-t-lg" />
-                {/* Name Centered Below Image */}
-                <div className="text-center py-6">
+                {/* Captain Image */}
+                <img src={captain.image} alt={captain.name} className="relative w-full h-[28rem] object-contain object-center z-10" />
+                {/* Name Bar */}
+                <div className="absolute bottom-0 left-0 w-full bg-black/60 py-4 text-center z-20 rounded-b-lg">
                   <h3 className="text-2xl font-bold group-hover:text-rcb-red transition-colors">
                     {captain.name}
                   </h3>
